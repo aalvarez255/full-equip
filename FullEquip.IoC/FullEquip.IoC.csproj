@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FullEquip.Core\FullEquip.Core.csproj" />
+    <ProjectReference Include="..\FullEquip.Infrastructure\FullEquip.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

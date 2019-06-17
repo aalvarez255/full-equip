@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullEquip.Api", "FullEquip.Api\FullEquip.Api.csproj", "{B9EAA2EF-A4C2-4BC7-A534-33C073B4384F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullEquip.Api", "FullEquip.Api\FullEquip.Api.csproj", "{B9EAA2EF-A4C2-4BC7-A534-33C073B4384F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullEquip.Core", "FullEquip.Core\FullEquip.Core.csproj", "{EE287BF3-7690-4914-8E49-5711761C34ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullEquip.Core", "FullEquip.Core\FullEquip.Core.csproj", "{EE287BF3-7690-4914-8E49-5711761C34ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullEquip.Infrastructure", "FullEquip.Infrastructure\FullEquip.Infrastructure.csproj", "{E9A18274-BC46-4237-ABFC-32A9E05374E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullEquip.Infrastructure", "FullEquip.Infrastructure\FullEquip.Infrastructure.csproj", "{E9A18274-BC46-4237-ABFC-32A9E05374E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullEquip.Tests", "FullEquip.Tests\FullEquip.Tests.csproj", "{91D253F0-3BC8-4023-BE57-E6464672EA5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullEquip.Tests", "FullEquip.Tests\FullEquip.Tests.csproj", "{91D253F0-3BC8-4023-BE57-E6464672EA5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullEquip.Jobs", "FullEquip.Jobs\FullEquip.Jobs.csproj", "{28AF94D8-BD6E-4F1A-9015-9D95E98DC484}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullEquip.Jobs", "FullEquip.Jobs\FullEquip.Jobs.csproj", "{28AF94D8-BD6E-4F1A-9015-9D95E98DC484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullEquip.IoC", "FullEquip.IoC\FullEquip.IoC.csproj", "{45D21982-34BF-4053-9672-6181FEC543E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{28AF94D8-BD6E-4F1A-9015-9D95E98DC484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28AF94D8-BD6E-4F1A-9015-9D95E98DC484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28AF94D8-BD6E-4F1A-9015-9D95E98DC484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D21982-34BF-4053-9672-6181FEC543E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D21982-34BF-4053-9672-6181FEC543E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D21982-34BF-4053-9672-6181FEC543E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D21982-34BF-4053-9672-6181FEC543E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
