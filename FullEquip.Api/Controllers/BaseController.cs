@@ -6,7 +6,7 @@ namespace FullEquip.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     public abstract class BaseController : ControllerBase
     {
     }

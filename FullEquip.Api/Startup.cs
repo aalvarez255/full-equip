@@ -120,6 +120,7 @@ namespace FullEquip.Api
                 }
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
