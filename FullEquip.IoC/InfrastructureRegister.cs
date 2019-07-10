@@ -3,6 +3,8 @@ using FullEquip.Infrastructure.DataAccess;
 using FullEquip.Infrastructure.DataAccess.Repositories;
 using FullEquip.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using FullEquip.Core.Interfaces.Repositories.ReadRepositories;
+using FullEquip.Infrastructure.DataAccess.Repositories.ReadRepositories;
 
 namespace FullEquip.IoC
 {
@@ -18,8 +20,8 @@ namespace FullEquip.IoC
         public static void RegisterRepository(IServiceCollection services)
         {
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
-            services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();        
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICourseReadRepository, CourseReadRepository>();
         }           
     }
 }

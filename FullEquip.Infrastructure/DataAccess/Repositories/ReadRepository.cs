@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FullEquip.Infrastructure.DataAccess.Repositories
 {
-    public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
+    public abstract class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
     {
-        private readonly ApplicationDbContext _db;
+        protected readonly ApplicationDbContext _db;
 
         public ReadRepository(ApplicationDbContext db)
         {

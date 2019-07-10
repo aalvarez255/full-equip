@@ -44,6 +44,9 @@ namespace FullEquip.Api
             InfrastructureRegister.RegisterDbContext(services, Configuration.GetConnectionString("DefaultConnection"));
             InfrastructureRegister.RegisterRepository(services);
 
+            // Register Core
+            CoreRegister.RegisterServices(services);
+
             // Register Identity & Authentication
             services.AddIdentity<User, Role>()
               .AddEntityFrameworkStores<ApplicationDbContext>()

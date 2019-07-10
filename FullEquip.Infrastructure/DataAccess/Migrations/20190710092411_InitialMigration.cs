@@ -54,6 +54,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(nullable: true),
+                    PrerequisiteCourseId = table.Column<Guid>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     VideoUrl = table.Column<string>(nullable: true)
@@ -61,6 +62,12 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_Courses_PrerequisiteCourseId",
+                        column: x => x.PrerequisiteCourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,7 +259,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("1762e6a6-2e1d-4dd5-8f0c-9ec3277416f9"), 0, "56b427e5-64f2-4a52-80d2-a57abf06d30e", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAEAACcQAAAAELrYLkX182SeCEL5n97ynRsAPt0bJg1Z/0VoBwvoY2SeNd1SekkxDc8oFD7Iwk36wg==", null, false, "", false, "admin@email.com" });
+                values: new object[] { new Guid("5fe1df95-b139-4546-8562-83fc4338af72"), 0, "7d579787-b676-495a-a13e-280d1b86bb7b", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAEAACcQAAAAEP/0n0pplvVes8LnpW+zLx/1O9U+Bb6I8cA9SIodNW0chjyKtQlFy1sre5e5ClC8Qg==", null, false, "", false, "admin@email.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -294,6 +301,11 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Courses_PrerequisiteCourseId",
+                table: "Courses",
+                column: "PrerequisiteCourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CourseStudents_StudentId",
                 table: "CourseStudents",
                 column: "StudentId");
@@ -308,7 +320,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                 table: "StudentAddress",
                 column: "StudentId",
                 unique: true);
-
+            
             migrationBuilder.RunFile("seed.sql");
         }
 

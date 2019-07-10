@@ -15,7 +15,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,7 +29,11 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
+                    b.Property<Guid?>("PrerequisiteCourseId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PrerequisiteCourseId");
 
                     b.ToTable("Courses");
 
@@ -183,15 +187,15 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1762e6a6-2e1d-4dd5-8f0c-9ec3277416f9"),
+                            Id = new Guid("5fe1df95-b139-4546-8562-83fc4338af72"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "56b427e5-64f2-4a52-80d2-a57abf06d30e",
+                            ConcurrencyStamp = "7d579787-b676-495a-a13e-280d1b86bb7b",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELrYLkX182SeCEL5n97ynRsAPt0bJg1Z/0VoBwvoY2SeNd1SekkxDc8oFD7Iwk36wg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP/0n0pplvVes8LnpW+zLx/1O9U+Bb6I8cA9SIodNW0chjyKtQlFy1sre5e5ClC8Qg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -298,6 +302,13 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                     b.Property<string>("VideoUrl");
 
                     b.HasDiscriminator().HasValue("OnlineCourse");
+                });
+
+            modelBuilder.Entity("FullEquip.Core.Entities.Course", b =>
+                {
+                    b.HasOne("FullEquip.Core.Entities.Course", "PrerequisiteCourse")
+                        .WithMany("NextCourses")
+                        .HasForeignKey("PrerequisiteCourseId");
                 });
 
             modelBuilder.Entity("FullEquip.Core.Entities.CourseStudent", b =>

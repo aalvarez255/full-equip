@@ -1,13 +1,20 @@
 ﻿
-INSERT INTO Courses (Id, Discriminator, Code, VideoUrl) VALUES
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1', 'http://sampleurl.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_2', 'http://sampleurl.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_3', 'http://sampleurl.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_4', 'http://sampleurl.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_5', 'http://sampleurl2.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_6', 'http://sampleurl2.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_7', 'http://sampleurl2.com'),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_8', 'http://sampleurl2.com')
+INSERT INTO Courses (Id, Discriminator, Code, VideoUrl, PrerequisiteCourseId) VALUES
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1', 'http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_2', 'http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_3', 'http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_4', 'http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_5', 'http://sampleurl2.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_6', 'http://sampleurl2.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_7', 'http://sampleurl2.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_8', 'http://sampleurl2.com', NULL)
+
+INSERT INTO Courses (Id, Discriminator, Code, VideoUrl, PrerequisiteCourseId) VALUES
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1.1', 'http://sampleurl.com', (SELECT TOP 1 ID FROM Courses WHERE Code = 'ONLINE_COURSE_1')),	
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1.2', 'http://sampleurl.com', (SELECT TOP 1 ID FROM Courses WHERE Code = 'ONLINE_COURSE_1'))
+		
+INSERT INTO Courses (Id, Discriminator, Code, VideoUrl, PrerequisiteCourseId) VALUES
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1.1.1', 'http://sampleurl.com', (SELECT TOP 1 ID FROM Courses WHERE Code = 'ONLINE_COURSE_1.1'))
 	
 INSERT INTO Courses (Id, Discriminator, Code, Address) VALUES
 	(NEWID(), 'ClassRoomCourse', 'ROOM_COURSE_1', 'Vallromanes'),
