@@ -4,7 +4,6 @@ using FullEquip.Api.Auth.Interfaces;
 using FullEquip.Infrastructure.DataAccess.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Security.Claims;

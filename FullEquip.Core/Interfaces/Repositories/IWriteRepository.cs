@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace FullEquip.Core.Interfaces.Repositories
 {
-    public interface IWriteRepository<T> where T : BaseEntity
+    public interface IWriteRepository<T> where T : class
     {
-        Task<T> GetAsync(Guid id);
         Task<T> AddAsync(T entity);
         Task<List<T>> AddAsync(List<T> entities);
         Task<T> UpdateAsync(T entity);

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FullEquip.Infrastructure.DataAccess.Repositories
 {
-    public class WriteRepository<T> : IWriteRepository<T> where T : BaseEntity
+    public abstract class WriteRepository<T> : IWriteRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _db;
+        protected readonly ApplicationDbContext _db;
 
         public WriteRepository(ApplicationDbContext db)
         {
@@ -38,11 +38,6 @@ namespace FullEquip.Infrastructure.DataAccess.Repositories
         {
             _db.Set<T>().RemoveRange(entities);
             await Task.CompletedTask;
-        }
-
-        public async Task<T> GetAsync(Guid id)
-        {
-            return await _db.Set<T>().FindAsync(id);
         }
 
         public async Task<T> UpdateAsync(T entity)

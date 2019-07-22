@@ -28,6 +28,18 @@ namespace FullEquip.Api.Dto
         {
             Address = address;
             VideoUrl = videoUrl;
+            Students = students;
+        }
+    }
+
+    public class CourseCreateEditDto : CourseDetailDto
+    {
+        public Guid? PrerequisiteCourseId { get; set; }
+
+        public CourseCreateEditDto(Guid id, string code, CourseTypeDto type, string address, string videoUrl, List<StudentDto> students, Guid? prerequisiteId)
+           : base(id, code, type, address, videoUrl, students)
+        {
+            PrerequisiteCourseId = prerequisiteId;
         }
     }
 

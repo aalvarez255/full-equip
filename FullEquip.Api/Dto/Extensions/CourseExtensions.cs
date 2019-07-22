@@ -42,12 +42,41 @@ namespace FullEquip.Api.Dto.Extensions
         public static CourseTreeDto ToTreeDto(this Course course)
         {
             return new CourseTreeDto(
-                course.Id, 
-                course.Code, 
+                course.Id,
+                course.Code,
                 GetCourseType(course),
                 course.NextCourses
                     .Select(x => x.ToTreeDto())
                     .ToList());
+        }
+
+        public static Course ToEntity(this CourseCreateEditDto dto)
+        {
+            var courseStudents = dto.Students
+                .Select(x => new CourseStudent() { StudentId = x.Id })
+                .ToList();
+
+            switch (dto.Type)
+            {
+                case CourseTypeDto.ClassRoom:
+                    return new ClassRoomCourse()
+                    {
+                        Code = dto.Code,
+                        Students = courseStudents,
+                        PrerequisiteCourseId = dto.PrerequisiteCourseId,
+                        Address = dto.Address                        
+                    };
+                case CourseTypeDto.Online:
+                    return new OnlineCourse()
+                    {
+                        Code = dto.Code,
+                        Students = courseStudents,
+                        PrerequisiteCourseId = dto.PrerequisiteCourseId,
+                        VideoUrl = dto.VideoUrl
+                    };
+                default:
+                    return null;
+            }
         }
 
         private static CourseTypeDto GetCourseType(Course course)

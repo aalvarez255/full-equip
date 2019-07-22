@@ -10,5 +10,7 @@ namespace FullEquip.Core.Interfaces.Services
         Task<List<Course>> GetAllAsync();
         Task<Course> GetDetailAsync(Guid id);
         Task<Course> GetTreeAsync(Guid id);
+        Task<Course> CreateAsync(Course course);
+        Task UpdateAsync(Course course);
     }
 }

@@ -11,6 +11,11 @@ namespace FullEquip.Infrastructure.DataAccess.Repositories.ReadRepositories
     {
         public CourseReadRepository(ApplicationDbContext db) : base(db) { }
 
+        public async Task<Course> GetByCodeAsync(string code)
+        {
+            return await _db.Courses.SingleOrDefaultAsync(x => x.Code == code);
+        }
+
         public async Task<Course> GetWithNextCoursesAsync(Guid id)
         {
             var course = _db.Courses

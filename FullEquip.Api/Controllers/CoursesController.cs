@@ -37,16 +37,19 @@ namespace FullEquip.Api.Controllers
             return Ok((await _service.GetTreeAsync(id)).ToTreeDto());
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<CourseDto>> Post([FromBody] CourseCreateEditDto dto)
         {
+            var created = await _service.CreateAsync(dto.ToEntity());
+            return Ok(created.ToDto());
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> Put(Guid id, [FromBody] CourseCreateEditDto dto)
         {
+            if (id != dto.Id) return BadRequest();
+            await _service.UpdateAsync(dto.ToEntity());
+            return Ok();
         }
 
         // DELETE api/values/5
