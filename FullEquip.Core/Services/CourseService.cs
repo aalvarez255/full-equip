@@ -1,6 +1,6 @@
-﻿using FullEquip.Core.Entities;
+﻿using FullEquip.Core.Constants.Errors;
+using FullEquip.Core.Entities;
 using FullEquip.Core.Exceptions;
-using FullEquip.Core.Exceptions.Errors;
 using FullEquip.Core.Interfaces.Repositories;
 using FullEquip.Core.Interfaces.Repositories.ReadRepositories;
 using FullEquip.Core.Interfaces.Repositories.WriteRepositories;

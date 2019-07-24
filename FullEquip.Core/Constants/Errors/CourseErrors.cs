@@ -1,4 +1,4 @@
-﻿namespace FullEquip.Core.Exceptions.Errors
+﻿namespace FullEquip.Core.Constants.Errors
 {
     public static class CourseErrors
     {
