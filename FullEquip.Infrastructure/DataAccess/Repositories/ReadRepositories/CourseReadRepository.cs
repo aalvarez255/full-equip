@@ -13,7 +13,9 @@ namespace FullEquip.Infrastructure.DataAccess.Repositories.ReadRepositories
 
         public async Task<Course> GetByCodeAsync(string code)
         {
-            return await _db.Courses.SingleOrDefaultAsync(x => x.Code == code);
+            return await _db.Courses
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Code == code);
         }
 
         public async Task<Course> GetWithNextCoursesAsync(Guid id)
