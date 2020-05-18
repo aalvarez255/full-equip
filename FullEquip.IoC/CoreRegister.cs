@@ -8,7 +8,8 @@ namespace FullEquip.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<ICourseService, CourseService>();        
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IStudentService, StudentService>();
         }           
     }
 }

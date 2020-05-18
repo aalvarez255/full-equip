@@ -1,12 +1,11 @@
-﻿using FullEquip.Core.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FullEquip.Core.Interfaces.Repositories
 {
-    public interface IWriteRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
+        Task<List<T>> GetAllAsync();
         Task<T> AddAsync(T entity);
         Task<List<T>> AddAsync(List<T> entities);
         Task<T> UpdateAsync(T entity);

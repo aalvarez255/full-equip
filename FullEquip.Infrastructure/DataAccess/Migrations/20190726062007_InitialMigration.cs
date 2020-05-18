@@ -54,6 +54,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     PrerequisiteCourseId = table.Column<Guid>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
@@ -259,7 +260,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("5fe1df95-b139-4546-8562-83fc4338af72"), 0, "7d579787-b676-495a-a13e-280d1b86bb7b", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAEAACcQAAAAEP/0n0pplvVes8LnpW+zLx/1O9U+Bb6I8cA9SIodNW0chjyKtQlFy1sre5e5ClC8Qg==", null, false, "", false, "admin@email.com" });
+                values: new object[] { new Guid("9e3e9b9c-efc5-4c37-973f-8e1e7b4bf09a"), 0, "73a5a7ad-4062-44da-a01c-7a7c05930fcf", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAEAACcQAAAAEK2NmtwEExUkJbqMxEHxqSqa5g1WWxvYUgob3m3yavEqnu43Mt2e9/LfgosZBJCzug==", null, false, "", false, "admin@email.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -320,7 +321,7 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                 table: "StudentAddress",
                 column: "StudentId",
                 unique: true);
-            
+
             migrationBuilder.RunFile("seed.sql");
         }
 

@@ -7,12 +7,14 @@ namespace FullEquip.Api.Dto
     {
         public Guid Id { get; private set; }
         public string Code { get; private set; }
+        public string Name { get; private set; }
         public CourseTypeDto Type { get; private set; }
 
-        public CourseDto(Guid id, string code, CourseTypeDto type)
+        public CourseDto(Guid id, string code, string name, CourseTypeDto type)
         {
             Id = id;
             Code = code;
+            Name = name;
             Type = type;
         }
     }
@@ -23,8 +25,8 @@ namespace FullEquip.Api.Dto
         public string VideoUrl { get; private set; }
         public List<StudentDto> Students { get; private set; }
 
-        public CourseDetailDto(Guid id, string code, CourseTypeDto type, string address, string videoUrl, List<StudentDto> students)
-            : base(id, code, type)
+        public CourseDetailDto(Guid id, string code, string name, CourseTypeDto type, string address, string videoUrl, List<StudentDto> students)
+            : base(id, code, name, type)
         {
             Address = address;
             VideoUrl = videoUrl;
@@ -36,8 +38,8 @@ namespace FullEquip.Api.Dto
     {
         public Guid? PrerequisiteCourseId { get; set; }
 
-        public CourseCreateEditDto(Guid id, string code, CourseTypeDto type, string address, string videoUrl, List<StudentDto> students, Guid? prerequisiteId)
-           : base(id, code, type, address, videoUrl, students)
+        public CourseCreateEditDto(Guid id, string code,  string name, CourseTypeDto type, string address, string videoUrl, List<StudentDto> students, Guid? prerequisiteId)
+           : base(id, code, name, type, address, videoUrl, students)
         {
             PrerequisiteCourseId = prerequisiteId;
         }
@@ -47,8 +49,8 @@ namespace FullEquip.Api.Dto
     {
         public List<CourseTreeDto> NextCourses { get; private set; }
 
-        public CourseTreeDto(Guid id, string code, CourseTypeDto type, List<CourseTreeDto> nextCourses)
-            : base(id, code, type)
+        public CourseTreeDto(Guid id, string code, string name, CourseTypeDto type, List<CourseTreeDto> nextCourses)
+            : base(id, code, name, type)
         {
             NextCourses = nextCourses;
         }

@@ -1,19 +1,25 @@
-﻿using FullEquip.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FullEquip.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FullEquip.Infrastructure.DataAccess.Repositories
 {
-    public abstract class WriteRepository<T> : IWriteRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _db;
 
-        public WriteRepository(ApplicationDbContext db)
+        public Repository(ApplicationDbContext db)
         {
             _db = db;
+        }
+
+        public async Task<List<T>> GetAllAsync()
+        {
+            var result = _db.Set<T>().AsNoTracking().ToList();
+            return await Task.FromResult(result);
         }
 
         public async Task<T> AddAsync(T entity)

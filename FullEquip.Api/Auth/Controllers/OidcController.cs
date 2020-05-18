@@ -50,21 +50,22 @@ namespace FullEquip.Api.Auth.Controllers
 
         private async Task<string> GetAzureAccessToken(string code)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri($"https://login.microsoftonline.com");
-                var content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("grant_type","authorization_code"),
-                    new KeyValuePair<string, string>("code", code),
-                    new KeyValuePair<string, string>("client_id", _config["AzureAD:ClientId"]),
-                    new KeyValuePair<string, string>("client_secret", _config["AzureAD:ClientSecret"]),
-                    new KeyValuePair<string, string>("redirect_uri", _config["AzureAD:RedirectUri"])
-                });
-                var result = await client.PostAsync($"/{ _config["AzureAD:TenantId"]}/oauth2/token", content);
-                var json = JObject.LoadAsync(await result.Content.ReadAsStringAsync());
-                return json
-            }
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri($"https://login.microsoftonline.com");
+            //    var content = new FormUrlEncodedContent(new[]
+            //    {
+            //        new KeyValuePair<string, string>("grant_type","authorization_code"),
+            //        new KeyValuePair<string, string>("code", code),
+            //        new KeyValuePair<string, string>("client_id", _config["AzureAD:ClientId"]),
+            //        new KeyValuePair<string, string>("client_secret", _config["AzureAD:ClientSecret"]),
+            //        new KeyValuePair<string, string>("redirect_uri", _config["AzureAD:RedirectUri"])
+            //    });
+            //    var result = await client.PostAsync($"/{ _config["AzureAD:TenantId"]}/oauth2/token", content);
+            //    var json = JObject.LoadAsync(await result.Content.ReadAsStringAsync());
+            //    return json
+            //}
+            return string.Empty;
         }
     }
 }

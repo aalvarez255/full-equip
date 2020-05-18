@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FullEquip.Core.Entities
 {
-    public class Student : BaseEntity
+    public class Student
     {
         public Student()
         {
             Courses = new List<CourseStudent>();
         }
 
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 

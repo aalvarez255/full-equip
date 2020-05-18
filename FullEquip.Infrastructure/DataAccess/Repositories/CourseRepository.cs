@@ -2,14 +2,19 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FullEquip.Core.Entities;
-using FullEquip.Core.Interfaces.Repositories.ReadRepositories;
+using FullEquip.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace FullEquip.Infrastructure.DataAccess.Repositories.ReadRepositories
+namespace FullEquip.Infrastructure.DataAccess.Repositories
 {
-    public class CourseReadRepository : ReadRepository<Course>, ICourseReadRepository 
+    public class CourseRepository : Repository<Course>, ICourseRepository 
     {
-        public CourseReadRepository(ApplicationDbContext db) : base(db) { }
+        public CourseRepository(ApplicationDbContext db) : base(db) { }
+
+        public async Task<Course> GetAsync(Guid id)
+        {
+            return await _db.Courses.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task<Course> GetByCodeAsync(string code)
         {
@@ -23,7 +28,6 @@ namespace FullEquip.Infrastructure.DataAccess.Repositories.ReadRepositories
             var course = _db.Courses
                 .AsNoTracking()
                 .Include(x => x.NextCourses)
-                .AsEnumerable()
                 .Where(x => x.Id == id)
                 .SingleOrDefault();
 
@@ -35,6 +39,7 @@ namespace FullEquip.Infrastructure.DataAccess.Repositories.ReadRepositories
             return await _db.Courses
                 .AsNoTracking()
                 .Include(x => x.Students)
+                .ThenInclude(s => s.Student)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
     }

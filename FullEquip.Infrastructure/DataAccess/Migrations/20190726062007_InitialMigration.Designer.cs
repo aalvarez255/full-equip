@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullEquip.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190710092411_InitialMigration")]
+    [Migration("20190726062007_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,8 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
+
+                    b.Property<string>("Name");
 
                     b.Property<Guid?>("PrerequisiteCourseId");
 
@@ -189,15 +191,15 @@ namespace FullEquip.Infrastructure.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5fe1df95-b139-4546-8562-83fc4338af72"),
+                            Id = new Guid("9e3e9b9c-efc5-4c37-973f-8e1e7b4bf09a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7d579787-b676-495a-a13e-280d1b86bb7b",
+                            ConcurrencyStamp = "73a5a7ad-4062-44da-a01c-7a7c05930fcf",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP/0n0pplvVes8LnpW+zLx/1O9U+Bb6I8cA9SIodNW0chjyKtQlFy1sre5e5ClC8Qg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK2NmtwEExUkJbqMxEHxqSqa5g1WWxvYUgob3m3yavEqnu43Mt2e9/LfgosZBJCzug==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

@@ -2,8 +2,6 @@
 using FullEquip.Core.Entities;
 using FullEquip.Core.Exceptions;
 using FullEquip.Core.Interfaces.Repositories;
-using FullEquip.Core.Interfaces.Repositories.ReadRepositories;
-using FullEquip.Core.Interfaces.Repositories.WriteRepositories;
 using FullEquip.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -14,36 +12,33 @@ namespace FullEquip.Core.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly ICourseReadRepository _readRepository;
-        private readonly ICourseWriteRepository _writeRepository;
-        private readonly ICourseStudentWriteRepository _studentsWriteRepository;
+        private readonly ICourseRepository _repository;
+        private readonly ICourseStudentRepository _studentRepository;
         private readonly IUnitOfWork _uow;
 
         public CourseService(
-            ICourseReadRepository readRepository,
-            ICourseWriteRepository writeRepository,
-            ICourseStudentWriteRepository studentsWriteReposirory,
+            ICourseRepository repository,
+            ICourseStudentRepository studentRepository,
             IUnitOfWork uow)
         {
-            _readRepository = readRepository;
-            _writeRepository = writeRepository;
-            _studentsWriteRepository = studentsWriteReposirory;
+            _repository = repository;
+            _studentRepository = studentRepository;
             _uow = uow;
         }
 
         public async Task<Course> CreateAsync(Course course)
         {
-            if (String.IsNullOrEmpty(course.Code))
+            if (string.IsNullOrEmpty(course.Code))
                 throw new ValidationException(CourseErrors.EmptyCode);
 
-            if (await _readRepository.GetByCodeAsync(course.Code) != null)
+            if (await _repository.GetByCodeAsync(course.Code) != null)
                 throw new ValidationException(CourseErrors.AlreadyExistsCode);
 
             if (course.PrerequisiteCourseId.HasValue
-                && await _readRepository.GetAsync(course.PrerequisiteCourseId.Value) == null)
+                && await _repository.GetAsync(course.PrerequisiteCourseId.Value) == null)
                 throw new ValidationException(CourseErrors.InvalidPrerequisiteCourse);
 
-            var createdCourse = await _writeRepository.AddAsync(course);
+            var createdCourse = await _repository.AddAsync(course);
             await _uow.CommitAsync();
 
             return createdCourse;
@@ -51,37 +46,37 @@ namespace FullEquip.Core.Services
 
         public async Task<List<Course>> GetAllAsync()
         {
-            return await _readRepository.GetAllAsync();
+            return await _repository.GetAllAsync();
         }
 
         public async Task<Course> GetDetailAsync(Guid id)
         {
-            return await _readRepository.GetWithStudentsAsync(id);
+            return await _repository.GetWithStudentsAsync(id);
         }
 
         public async Task<Course> GetTreeAsync(Guid id)
         {
-            return await _readRepository.GetWithNextCoursesAsync(id);
+            return await _repository.GetWithNextCoursesAsync(id);
         }
 
         public async Task UpdateAsync(Course course)
         {
-            var dbCourse = await _writeRepository.GetWithStudentsAsync(course.Id);
+            var dbCourse = await GetDetailAsync(course.Id);
             if (dbCourse == null)
                 throw new ValidationException(CourseErrors.NotFound);
 
             if (course.GetType() != dbCourse.GetType())
                 throw new ValidationException(CourseErrors.ChangeTypeNotAllowed);
 
-            if (String.IsNullOrEmpty(course.Code))
+            if (string.IsNullOrEmpty(course.Code))
                 throw new ValidationException(CourseErrors.EmptyCode);
 
-            var sameCodeCourse = await _readRepository.GetByCodeAsync(course.Code);
+            var sameCodeCourse = await _repository.GetByCodeAsync(course.Code);
             if (sameCodeCourse != null && sameCodeCourse.Id != course.Id)
                 throw new ValidationException(CourseErrors.AlreadyExistsCode);
 
             if (course.PrerequisiteCourseId.HasValue
-                && await _readRepository.GetAsync(course.PrerequisiteCourseId.Value) == null)
+                && await _repository.GetAsync(course.PrerequisiteCourseId.Value) == null)
                 throw new ValidationException(CourseErrors.InvalidPrerequisiteCourse);
 
             await UpdateCourseStudentsAsync(dbCourse, course);
@@ -96,19 +91,20 @@ namespace FullEquip.Core.Services
                 .ToList();
 
             if (deletedStudents.Any())
-                await _studentsWriteRepository.DeleteAsync(deletedStudents);
+                await _studentRepository.DeleteAsync(deletedStudents);
 
             var addedUsers = course.Students
                 .Where(x => !dbCourse.Students.Any(s => s.StudentId == x.StudentId))
                 .ToList();
 
             if (addedUsers.Any())
-                await _studentsWriteRepository.AddAsync(addedUsers);
+                await _studentRepository.AddAsync(addedUsers);
         }
 
         private async Task UpdateCoursePropertiesAsync(Course dbCourse, Course course)
         {
             dbCourse.Code = course.Code;
+            dbCourse.Name = course.Name;
             dbCourse.PrerequisiteCourseId = course.PrerequisiteCourseId;
 
             if (dbCourse is OnlineCourse)
@@ -116,7 +112,17 @@ namespace FullEquip.Core.Services
             else if (dbCourse is ClassRoomCourse)
                 (dbCourse as ClassRoomCourse).Address = (course as ClassRoomCourse).Address;
 
-            await _writeRepository.UpdateAsync(dbCourse);
+            await _repository.UpdateAsync(dbCourse);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var dbCourse = await _repository.GetAsync(id);
+            if (dbCourse == null)
+                throw new ValidationException(CourseErrors.NotFound);
+
+            await _repository.DeleteAsync(dbCourse);
+            await _uow.CommitAsync();
         }
     }
 }

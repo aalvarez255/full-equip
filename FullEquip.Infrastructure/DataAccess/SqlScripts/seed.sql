@@ -1,13 +1,13 @@
 ﻿
-INSERT INTO Courses (Id, Discriminator, Code, VideoUrl, PrerequisiteCourseId) VALUES
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1', 'http://sampleurl.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_2', 'http://sampleurl.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_3', 'http://sampleurl.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_4', 'http://sampleurl.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_5', 'http://sampleurl2.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_6', 'http://sampleurl2.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_7', 'http://sampleurl2.com', NULL),
-	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_8', 'http://sampleurl2.com', NULL)
+INSERT INTO Courses (Id, Discriminator, Code, Name, VideoUrl, PrerequisiteCourseId) VALUES
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1', 'CURSO Nº 1', 'http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_2', 'CURSO Nº 2','http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_3', 'CURSO Nº 3','http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_4', 'CURSO Nº 4','http://sampleurl.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_5', 'CURSO Nº 5','http://sampleurl2.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_6', 'CURSO Nº 6','http://sampleurl2.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_7', 'CURSO Nº 7','http://sampleurl2.com', NULL),
+	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_8', 'CURSO Nº 8','http://sampleurl2.com', NULL)
 
 INSERT INTO Courses (Id, Discriminator, Code, VideoUrl, PrerequisiteCourseId) VALUES
 	(NEWID(), 'OnlineCourse', 'ONLINE_COURSE_1.1', 'http://sampleurl.com', (SELECT TOP 1 ID FROM Courses WHERE Code = 'ONLINE_COURSE_1')),	

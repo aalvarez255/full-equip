@@ -1,0 +1,512 @@
+{
+	"info": {
+		"_postman_id": "c8d1232b-fc5d-4847-bb14-40cedfdaa2ad",
+		"name": "Full Equip",
+		"description": "Full Equip project's API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "JWT Auth",
+			"item": [
+				{
+					"name": "Get access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c3947a6-e250-4537-accc-ddfe740a297c",
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.globals.set(\"access_token\", data.accessToken.accessToken);\r",
+									"pm.globals.set(\"refresh_token\", data.refreshToken);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"admin@email.com\",\n\t\"password\": \"Admin1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/auth/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bfb72894-f9b5-40ca-aa93-6df5bd7bf89c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "203f445f-41a2-4287-bb07-92cbe6c46699",
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.globals.set(\"access_token\", data.accessToken.accessToken);\r",
+									"pm.globals.set(\"refresh_token\", data.refreshToken);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"{{access_token}}\",\n\t\"refreshToken\": \"{{refresh_token}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/auth/refresh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Get all students",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9d3a87a-eec2-43e3-9866-0238a29148e5",
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.globals.set(\"first_student_id\", data[0].id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/students",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "Get all courses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9d3a87a-eec2-43e3-9866-0238a29148e5",
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.globals.set(\"first_course_id\", data[0].id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/courses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get course detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/courses/{{first_course_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{first_course_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get course path",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/courses/{{first_course_id}}/path",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{first_course_id}}",
+								"path"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new online course",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9481dbe0-4b64-43aa-aabe-c75fb8045d01",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"videoUrl\": \"http://sampleurl3.com\",\r\n    \"code\": \"ONLINE_COURSE_AA\",\r\n    \"name\": \"CURSO AA\",\r\n    \"type\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/courses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new room course",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "318e768b-3520-4a27-942e-d31bdae8b487",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"Test street, Nº 4\",\r\n    \"code\": \"ROOM_COURSE_BB\",\r\n    \"name\": \"CURSO BB\",\r\n    \"type\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/courses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new course with students",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cd2a04a-b0da-4987-b895-022c166dfb00",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"videoUrl\": \"http://sampleurl3.com\",\r\n    \"code\": \"ONLINE_COURSE_A3\",\r\n    \"name\": \"CURSO A3\",\r\n    \"type\": 0,\r\n    \"students\": [\r\n    \t{\r\n    \t\t\"id\": \"{{first_student_id}}\"\r\n    \t}\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/courses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update course properties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": \"{{first_course_id}}\",\r\n    \"code\": \"ONLINE_COURSE_A32\",\r\n    \"name\": \"CURSO AA32\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/courses/{{first_course_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{first_course_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/courses/{{first_course_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{first_course_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "70a39d60-b574-49fa-b124-d635a9ca3b1d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4c811514-e8f4-4fe8-b01f-cacc1ddb8d88",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d7130fc3-3e5d-4d51-a615-992529d3ba45",
+			"key": "host",
+			"value": "http://localhost:51129",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

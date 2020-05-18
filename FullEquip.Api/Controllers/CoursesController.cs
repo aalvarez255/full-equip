@@ -52,10 +52,11 @@ namespace FullEquip.Api.Controllers
             return Ok();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
+            await _service.DeleteAsync(id);
+            return Ok();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FullEquip.Core.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FullEquip.Api.Dto.Extensions
@@ -8,7 +9,7 @@ namespace FullEquip.Api.Dto.Extensions
     {
         public static CourseDto ToDto(this Course course)
         {
-            return new CourseDto(course.Id, course.Code, GetCourseType(course));
+            return new CourseDto(course.Id, course.Code, course.Name, GetCourseType(course));
         }
 
         public static CourseDetailDto ToDetailDto(this Course course)
@@ -22,6 +23,7 @@ namespace FullEquip.Api.Dto.Extensions
                     return new CourseDetailDto(
                         course.Id,
                         course.Code,
+                        course.Name,
                         type,
                         null,
                         (course as OnlineCourse).VideoUrl,
@@ -30,6 +32,7 @@ namespace FullEquip.Api.Dto.Extensions
                     return new CourseDetailDto(
                         course.Id,
                         course.Code,
+                        course.Name,
                         type,
                         (course as ClassRoomCourse).Address,
                         null,
@@ -44,6 +47,7 @@ namespace FullEquip.Api.Dto.Extensions
             return new CourseTreeDto(
                 course.Id,
                 course.Code,
+                course.Name,
                 GetCourseType(course),
                 course.NextCourses
                     .Select(x => x.ToTreeDto())
@@ -52,7 +56,7 @@ namespace FullEquip.Api.Dto.Extensions
 
         public static Course ToEntity(this CourseCreateEditDto dto)
         {
-            var courseStudents = dto.Students
+            var courseStudents = dto.Students?
                 .Select(x => new CourseStudent() { StudentId = x.Id })
                 .ToList();
 
@@ -61,16 +65,20 @@ namespace FullEquip.Api.Dto.Extensions
                 case CourseTypeDto.ClassRoom:
                     return new ClassRoomCourse()
                     {
+                        Id = dto.Id,
+                        Name = dto.Name,
                         Code = dto.Code,
-                        Students = courseStudents,
+                        Students = courseStudents ?? new List<CourseStudent>(),
                         PrerequisiteCourseId = dto.PrerequisiteCourseId,
                         Address = dto.Address                        
                     };
                 case CourseTypeDto.Online:
                     return new OnlineCourse()
                     {
+                        Id = dto.Id,
+                        Name = dto.Name,
                         Code = dto.Code,
-                        Students = courseStudents,
+                        Students = courseStudents ?? new List<CourseStudent>(),
                         PrerequisiteCourseId = dto.PrerequisiteCourseId,
                         VideoUrl = dto.VideoUrl
                     };

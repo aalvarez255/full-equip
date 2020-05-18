@@ -2,10 +2,11 @@
 using System;
 using System.Threading.Tasks;
 
-namespace FullEquip.Core.Interfaces.Repositories.ReadRepositories
+namespace FullEquip.Core.Interfaces.Repositories
 {
-    public interface ICourseReadRepository : IReadRepository<Course>
+    public interface ICourseRepository : IRepository<Course>
     {
+        Task<Course> GetAsync(Guid id);
         Task<Course> GetByCodeAsync(string code);
         Task<Course> GetWithStudentsAsync(Guid id);
         Task<Course> GetWithNextCoursesAsync(Guid id);
