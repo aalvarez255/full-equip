@@ -2,10 +2,10 @@
 using FullEquip.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FullEquip.Api.Middleware
@@ -37,7 +37,7 @@ namespace FullEquip.Api.Middleware
                 context.Response.ContentType = "application/json";
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    byte[] data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ex.Message));
+                    byte[] data = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(ex.Message));
                     await context.Response.Body.WriteAsync(data, 0, data.Length);
                 }
             }
@@ -45,23 +45,14 @@ namespace FullEquip.Api.Middleware
 
         private HttpStatusCode ConfigurateExceptionTypes(Exception exception)
         {
-            HttpStatusCode httpStatusCode;
-
-            // Exception type To Http Status configuration 
-            switch (exception)
+            var httpStatusCode = exception switch
             {
-                case var _ when exception is ValidationException:
-                    httpStatusCode = HttpStatusCode.BadRequest;
-                    break;
-                case var _ when exception is AuthException:
-                    httpStatusCode = HttpStatusCode.Unauthorized;
-                    break;
-                default:
-                    httpStatusCode = HttpStatusCode.InternalServerError;
-                    break;
-            }
+                var _ when exception is ValidationException => HttpStatusCode.BadRequest,
+                var _ when exception is AuthException => HttpStatusCode.Unauthorized,
+                _ => HttpStatusCode.InternalServerError,
+            };
 
             return httpStatusCode;
-        }
+        } 
     }
 }
